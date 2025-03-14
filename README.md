@@ -30,7 +30,7 @@ A fully functional **Stack** implemented using a **doubly linked list** in C++. 
 
 Clone the repository:
 ```bash
-git clone https://github.com/your-repo/stack-implementation.git stack-implementation
+git clone https://github.com/mariammxitaryan/Stack.git stack-implementation
 cd stack-implementation
 ```
 Compile the project:
