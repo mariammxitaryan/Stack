@@ -7,96 +7,97 @@ template <typename T>
 Stack<T>::iterator::iterator(Stack<T>::Node* ptr) : node_ptr(ptr) { }
 
 template <typename T>
-typename List<T>::iterator::reference List<T>::iterator::operator*() const {
+typename Stack<T>::iterator::reference Stack<T>::iterator::operator*() const {
     return node_ptr->data;
 }
 
 template <typename T>
-typename List<T>::iterator::pointer List<T>::iterator::operator->() const {
+typename Stack<T>::iterator::pointer Stack<T>::iterator::operator->() const {
     return &node_ptr->data;
 }
 
 template <typename T>
-typename List<T>::iterator& List<T>::iterator::operator++() {
+typename Stack<T>::iterator& Stack<T>::iterator::operator++() {
     node_ptr = node_ptr->next;
     return *this;
 }
 
 template <typename T>
-typename List<T>::iterator& List<T>::iterator::operator--() {
+typename Stack<T>::iterator& Stack<T>::iterator::operator--() {
     node_ptr = node_ptr->prev;
     return *this;
 }
 
 template <typename T>
-typename List<T>::iterator& List<T>::iterator::operator++(int) {
-    typename List<T>::iterator it = *this;
+typename Stack<T>::iterator Stack<T>::iterator::operator++(int) {
+    typename Stack<T>::iterator it = *this;
     node_ptr = node_ptr->next;
     return it;
 }
 
 template <typename T>
-typename List<T>::iterator& List<T>::iterator::operator--(int) {
-    typename List<T>::iterator it = *this;
+typename Stack<T>::iterator Stack<T>::iterator::operator--(int) {
+    typename Stack<T>::iterator it = *this;
     node_ptr = node_ptr->prev;
     return it;
 }
 
 template <typename T>
-bool List<T>::iterator::operator==(const typename List<T>::iterator& other) {
+bool Stack<T>::iterator::operator==(const typename Stack<T>::iterator& other) const {
     return node_ptr == other.node_ptr;
 }
 
-bool List<T>::iterator::operator!=(const typename List<T>::iterator& other) {
+template <typename T>
+bool Stack<T>::iterator::operator!=(const typename Stack<T>::iterator& other) const {
     return node_ptr != other.node_ptr;
 }
 
 template <typename T>
-List<T>::const_iterator::const_iterator(typename List<T>::Node* ptr) : node_ptr(ptr) {}
+Stack<T>::const_iterator::const_iterator(typename Stack<T>::Node* ptr) : node_ptr(ptr) {}
 
 template <typename T>
-typename List<T>::const_iterator::reference List<T>::const_iterator::operator*() const {
+typename Stack<T>::const_iterator::reference Stack<T>::const_iterator::operator*() const {
     return node_ptr->data;
 }
 
 template <typename T>
-typename List<T>::const_iterator::pointer List<T>::const_iterator::operator->() const {
+typename Stack<T>::const_iterator::pointer Stack<T>::const_iterator::operator->() const {
     return &node_ptr->data;
 }
 
 template <typename T>
-List<T>::const_iterator::const_iterator& List<T>::const_iterator::operator++() {
+Stack<T>::const_iterator& Stack<T>::const_iterator::operator++() {
     node_ptr = node_ptr->next;
     return *this;
 }
 
 template <typename T>
-typename List<T>::const_iterator& List<T>::const_iterator::operator--() {
+typename Stack<T>::const_iterator& Stack<T>::const_iterator::operator--() {
     node_ptr = node_ptr->prev;
     return *this;
 }
 
 template <typename T>
-typename List<T>::const_iterator& List<T>::const_iterator::operator++(int) {
-    List<T>::const_iterator it = *this;
+typename Stack<T>::const_iterator Stack<T>::const_iterator::operator++(int) {
+    Stack<T>::const_iterator it = *this;
     node_ptr = node_ptr->next;
     return it;
 }
 
 template <typename T>
-List<T>::const_iterator::const_iterator& List<T>::const_iterator::operator--(int) {
-    List<T>::const_iterator it = *this;
+Stack<T>::const_iterator Stack<T>::const_iterator::operator--(int) {
+    Stack<T>::const_iterator it = *this;
     node_ptr = node_ptr->prev;
     return it;
 }
 
 template <typename T>
-bool List<T>::const_iterator::operator==(const typename List<T>::const_iterator& other) const {
+bool Stack<T>::const_iterator::operator==(const typename Stack<T>::const_iterator& other) const {
     return node_ptr == other.node_ptr;
 }
 
 template <typename T>
-bool  List<T>::const_iterator::operator!=(const typename List<T>::const_iterator& other) const {
+bool  Stack<T>::const_iterator::operator!=(const typename Stack<T>::const_iterator& other) const {
     return node_ptr != other.node_ptr;
 }
 
@@ -123,8 +124,8 @@ void Stack<T>::push(const T& value) {
 }
 
 template <typename T>
-void Stack<T>::push_range(std::initializer_list<T> ilist) {
-    for (const auto& elem : ilist) {
+void Stack<T>::push_range(std::initializer_list<T> iStack) {
+    for (const auto& elem : iStack) {
         push(elem);
     }
 }
@@ -144,16 +145,19 @@ void Stack<T>::swap(Stack& other) {
 template <typename T>
 void Stack<T>::pop() {
     if (!head) {
-        throw std::out_of_range("List is empty");
+        throw std::out_of_range("Stack is empty. Cannot pop.");
     }
     typename Stack<T>::Node* tmp = head;
     head = head->next;
     if (head) {
         head->prev = nullptr;
+    } else {
+        head = nullptr; 
     }
     delete tmp;
     --stack_size;
 }
+
 
 template <typename T>
 typename Stack<T>::reference Stack<T>::top() {
@@ -180,7 +184,6 @@ void Stack<T>::clear() {
         head = head->next;
         delete tmp;
     }
-    head = nullptr;
     stack_size = 0;
 }
 

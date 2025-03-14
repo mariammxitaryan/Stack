@@ -40,8 +40,8 @@ public:
         iterator& operator--();
         iterator operator++(int);
         iterator operator--(int);
-        bool operator==(const iterator&);
-        bool operator!=(const iterator&);
+        bool operator==(const iterator&) const;
+        bool operator!=(const iterator&) const;
     private:
         Node* node_ptr;
     };
@@ -70,7 +70,7 @@ public:
     Stack();
     ~Stack();
     void push(const T&);
-    void push_range(std::initializer_list);
+    void push_range(std::initializer_list<T>);
 
     template <typename... Args>
     void emplace(Args&&...);
@@ -87,5 +87,6 @@ public:
     const_iterator cend() const;
 };
 
+#include "stackImplementation.tpp"
 
 #endif
